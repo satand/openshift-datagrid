@@ -1,0 +1,26 @@
+apiVersion: infinispan.org/v2alpha1
+kind: Cache
+metadata:
+  name: replicated-cache
+  namespace: datagrid-demo
+spec:
+  clusterName: infinispan
+  name: replicated-cache
+  template: |-
+    replicatedCache: 
+      mode: "SYNC"
+      statistics: "true"
+      encoding: 
+        mediaType: "application/x-protostream"
+      expiration:
+        lifespan: "3600000"
+        maxIdle: "-1"
+      memory:
+        storage: "HEAP"
+        maxSize: "100MB"
+        whenFull: "REMOVE"
+      persistence:
+        passivation: "true"
+        fileStore: ~
+  updates:
+    strategy: recreate

@@ -1,0 +1,31 @@
+apiVersion: infinispan.org/v2alpha1
+kind: Backup
+metadata:
+  name: my-backup
+  namespace: datagrid-demo
+spec:
+  cluster: infinispan
+  volume:
+    storage: 1Gi
+    # storageClassName: my-storage-class # If it is not specified the default storageClass will be used
+  # # Optional resources under backup 
+  # resources:
+  #   templates:
+  #     - distributed-sync-prod
+  #     - distributed-sync-dev
+  #   caches:
+  #     - cache-one
+  #     - cache-two
+  #   counters:
+  #     - counter-name
+  #   protoSchemas:
+  #     - authors.proto
+  #     - books.proto
+  #   tasks:
+  #     - wordStream.js
+  # # you can also use the * wildcard character
+  # resources:
+  #   caches:
+  #     - "*"
+  #   protoSchemas:
+  #     - "*"

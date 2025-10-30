@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+   name: cluster-config
+   namespace: datagrid-demo
+data:
+    infinispan-config.yaml: >
+      infinispan:
+        cacheContainer:
+          caches:
+            base-template:
+              distributedCacheConfiguration:
+                expiration:
+                  lifespan: "5000"
+            extended-template:
+              distributedCacheConfiguration:
+                configuration: "base-template"
+                encoding:
+                  mediaType: "application/x-protostream"
+                expiration:
+                  lifespan: "10000"
+                  maxIdle: "1000"

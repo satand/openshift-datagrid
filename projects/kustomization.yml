@@ -1,0 +1,7 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - 01.datagrid-operator-project.yaml
+  - 02.grafana-operator-project.yaml
+  - 03.datagrid-project.yaml 
+  - 04.grafana-project.yaml

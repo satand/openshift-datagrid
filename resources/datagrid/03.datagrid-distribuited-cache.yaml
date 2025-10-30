@@ -1,0 +1,19 @@
+apiVersion: infinispan.org/v2alpha1
+kind: Cache
+metadata:
+  name: distributed-cache
+  namespace: datagrid-demo
+spec:
+  clusterName: infinispan
+  name: distributed-cache
+  template: |-
+    distributedCache:
+      mode: "SYNC"
+      owners: "2"
+      statistics: "true"
+      encoding:
+        mediaType: "application/x-protostream"
+      persistence:
+        fileStore: ~
+  updates:
+    strategy: recreate

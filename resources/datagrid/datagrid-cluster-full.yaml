@@ -1,0 +1,67 @@
+apiVersion: infinispan.org/v1
+kind: Infinispan
+metadata:
+  annotations:
+    infinispan.org/monitoring: "true"
+    infinispan.org/operatorPodTargetLabels: rht.comp,rht.comp_ver,rht.prod_name,rht.prod_ver,rht.subcomp_t
+  labels:
+    rht.comp: Data_Grid
+    rht.comp_ver: 8.5.5
+    rht.prod_name: Red_Hat_Runtimes
+    rht.prod_ver: 2025-Q3
+    rht.subcomp_t: application
+  name: infinispan
+  namespace: datagrid-demo
+spec:
+  configListener:
+    enabled: true
+    logging:
+      level: info
+  container:
+    memory: 1Gi
+  replicas: 2
+  scheduling:
+    affinity:
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+        - podAffinityTerm:
+            labelSelector:
+              matchLabels:
+                app: infinispan-pod
+                clusterName: infinispan
+                infinispan_cr: infinispan
+            topologyKey: kubernetes.io/hostname
+          weight: 100
+  security:
+    endpointAuthentication: true
+    endpointEncryption:
+      certSecretName: infinispan-cert-secret
+      certServiceName: service.beta.openshift.io
+      clientCert: None
+      type: Service
+    endpointSecretName: infinispan-generated-secret
+  service:
+    container:
+      livenessProbe:
+        failureThreshold: 5
+        initialDelaySeconds: 0
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      readinessProbe:
+        failureThreshold: 5
+        initialDelaySeconds: 0
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      startupProbe:
+        failureThreshold: 600
+        initialDelaySeconds: 3
+        periodSeconds: 1
+        successThreshold: 1
+        timeoutSeconds: 1
+      storage: 1Gi
+    type: DataGrid
+  upgrades:
+    type: Shutdown
+  version: 8.5.5-2
