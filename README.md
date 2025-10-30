@@ -272,6 +272,6 @@ In the Cache CR
           value:
             mediaType: "application/x-protostream"
   ...
-```
+  ```
 
 Data Grid includes an implementation of the ProtoStream API with native support for frequently used types, including String and Integer. If you want to store custom types in your caches, use ProtoStream marshalling to generate and register serialization contexts with Data Grid so that it can marshall your objects.
